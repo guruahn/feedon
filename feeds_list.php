@@ -30,7 +30,9 @@ $feeds = $feed->getList($orderby);
 	<div id="wrapper">
 		<div id="navigation">
 			<a href="update_feeds.php" >피드 업데이트</a>
+            피드검색<input type="text" name="q" class="find_feed" placeholder="rss주소나 키워드를 입력하세요"/>
 		</div>
+        <div id="content"></div>
 		<div class="list">
 			<ul>
 				<?php
@@ -51,7 +53,42 @@ $feeds = $feed->getList($orderby);
 			</ul>
 		</div><!--//.list-->
 		<div id="footer">
-			피드구독기 테스트버전 © Copyright 2013 tendency. All rights reserved.
+			피드구독기 테스트버전 © Copyright 2014 tendency. All rights reserved.
 		</div>
 	</div><!--//#wrapper-->
+
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.find_feed').keyup(function(){
+                findFeeds($(this).val());
+            });
+        });
+        google.load("feeds", "1");
+
+        function findFeeds(query) {
+            // Query for president feeds on cnn.com
+            google.feeds.findFeeds(query, findDone);
+        }
+
+        function findDone(result) {
+            // Make sure we didn't get an error.
+            if (!result.error) {
+                // Get content div
+                console.log(result);
+                var content = document.getElementById('content');
+                var html = '';
+
+                // Loop through the results and print out the title of the feed and link to
+                // the url.
+                for (var i = 0; i < result.entries.length; i++) {
+                    var entry = result.entries[i];
+                    html += '<p> <img src="http://www.google.com/s2/favicons?domain='+ entry.link +'" alt=""/> <a href="/feed/v1/' + entry.url + '" title="'+ entry.title +'">' + entry.title + '</a></p>';
+                }
+                content.innerHTML = html;
+            }
+        }
+
+    </script>
 </body>
