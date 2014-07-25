@@ -37,6 +37,24 @@
 		return $providers;
 	}
 
-	
+     /*
+     * Insert
+     * @param
+     * @return array
+     */
+     public function insert()
+     {
+
+         $data = Array(
+             'name' => $this->name,
+             'url' => $this->url
+         );
+
+         $id = $this->db->insert('feed_provider', $data);
+         if ($id)
+             return true;
+         else
+             return false;
+     }
  }
 

@@ -119,7 +119,7 @@
 	public function readRssFeed($rss_provider_name, $rss_provider_url)
 	{
 		$received_rss_feeds = perform_curl_operation($rss_provider_url);
-		if(!mb_detect_encoding($str, "utf8")){
+		if(!mb_detect_encoding($received_rss_feeds, "utf8")){
 			$received_rss_feeds = utf8_encode($received_rss_feeds);
 		}
 		// Is it empty?
