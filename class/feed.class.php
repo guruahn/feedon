@@ -42,7 +42,6 @@
 				$this->db->orderBy($key,$value);
 			}
 		}
-		echo "this is feeds class!!";
 		$feeds = $this->db->get('feeds');
 		return $feeds;
 	}

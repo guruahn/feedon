@@ -20,37 +20,107 @@ $feeds = $feed->getList($orderby);
 	<meta http-equiv="Content-Script-Type" content="text/javascript">
 	<meta http-equiv="Content-Style-Type" content="text/css">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="author" content="텐던시" />
-	<meta name="viewport" content="width=1400">
 	<title>피드리스트</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/superhero.css" rel="stylesheet" />
+    <link href="css/bootswatch.min.css" rel="stylesheet" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script type="text/javascript" src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-	<div id="wrapper">
-		<div id="navigation">
-			<a href="update_feeds.php" >피드 업데이트</a>
-            피드검색<input type="text" name="q" class="find_feed" placeholder="rss주소나 키워드를 입력하세요"/>
-		</div>
+
+	<div id="wrapper" class="container">
+        <div class="bs-docs-section clearfix">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-header">
+                        <h1 id="navbar">My Feed</h1>
+                    </div>
+                    <div class="bs-component">
+                        <div class="navbar navbar-inverse">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="#">Home</a>
+                            </div>
+                            <div class="navbar-collapse collapse navbar-inverse-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li class="active"><a href="#">Active</a></li>
+                                    <li><a href="#">Link</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li class="dropdown-header">Dropdown header</li>
+                                            <li><a href="#">Separated link</a></li>
+                                            <li><a href="#">One more separated link</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <form class="navbar-form navbar-left">
+                                    <input type="text" name="q" class="form-control col-lg-8 find_feed" placeholder="feed search" />
+                                </form>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="update_feeds.php">Update</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Separated link</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+                    </div><!-- /example -->
+
+                </div>
+            </div>
+        </div>
+
         <div id="content"></div>
-		<div class="list">
-			<ul>
+		<div class="list-group">
 				<?php
 				if($feeds)
 				{
 					foreach($feeds as $item){
 						$feed->setItem($item);
-                        echo "<li>";
-                        echo "<a href='".$feed->url."' target='_blank'>".text_cut_utf8( $feed->title, 100 )."</a>";
-                        echo "</li>";
-					}
+                ?>
+                        <a href='<?php echo $feed->url; ?>' class='list-group-item' target='_blank'>
+                            <h4 class='list-group-item-heading'><?php echo text_cut_utf8( $feed->title, 100 ); ?></h4>
+                            <p class='list-group-item-text'>Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                        </a>
+
+                <?php
+					}//end foreach
 				}
 				else
 				{
 				?>
-					<li>피드가 없습니다.</li>
-				<?php }?>
-			</ul>
+					<a href="" class='list-group-item' >피드가 없습니다.</a>
+				<?php
+                }//end if
+                ?>
 		</div><!--//.list-->
 		<div id="footer">
 			피드구독기 테스트버전 © Copyright 2014 tendency. All rights reserved.
@@ -59,86 +129,9 @@ $feeds = $feed->getList($orderby);
 
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootswatch.js"></script>
     <script type="text/javascript" src="js/functions.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.find_feed').keyup(function(){
-                findFeeds($(this).val());
-            });
-            $('#content').on('click','.rss_url',function(){
-                subscription($(this).attr('href'));
-                return false;
-            });
-            $('#content').on('click', '.subscription', function(){
-                $.ajax({
-                    type: "POST",
-                    url: "api/insert_provider.php",
-                    data: { feed_url: $(this).attr('data-link'), name: $(this).attr('data-name')},
-                    dataType: "json"
-                })
-                .success(function( data ) {
-                    if(data.result){
-                        //로그인 후 사용자 정보 세팅
-                        //console.log(printr_json( data ));
-                        window.location = 'update_feeds.php';
-                    }else{
-                        alert("문제가 발생했습니다.");
-                    }
-                }).fail(function(response){
-                    //console.log(printr_json(response));
-                });
-                return false;
-            });
-        });
-        google.load("feeds", "1");
-
-        function findFeeds(query) {
-            // Query for president feeds on cnn.com
-            google.feeds.findFeeds(query, findDone);
-        }
-
-        function findDone(result) {
-            // Make sure we didn't get an error.
-            if (!result.error) {
-                // Get content div
-                var content = document.getElementById('content');
-                var html = '';
-
-                // Loop through the results and print out the title of the feed and link to
-                // the url.
-                for (var i = 0; i < result.entries.length; i++) {
-                    var entry = result.entries[i];
-                    html += '<div>';
-                    html += '<p> <img src="http://www.google.com/s2/favicons?domain='+ entry.link +'" alt=""/> <a class="rss_url" href="' + entry.url + '" title="'+ entry.title +'">' + entry.title + '</a></p>';
-                    html += '<p class="description">'+entry.contentSnippet+'</p>';
-                    html += '</div>';
-                }
-                content.innerHTML = html;
-            }
-        }
-
-        function subscription(rss_url){
-            var feed = new google.feeds.Feed(rss_url);
-            feed.load(function(result) {
-                if (!result.error) {
-                    console.log(result);
-                    var content = document.getElementById('content');
-                    var html = '';
-                    html += '<div class="title">';
-                    html += '<h3><a href="'+result.feed.link+'">'+result.feed.title+'</a></h3>';
-                    html += '<button class="subscription" data-link="'+result.feed.feedUrl+'" data-name="'+result.feed.title+'">+구독</button>';
-                    html += '</div>';
-                    for (var i = 0; i < result.feed.entries.length; i++) {
-                        var entry = result.feed.entries[i];
-                        html += '<div>';
-                        html += '<p><a href="'+entry.link+'">'+entry.title+'</a> <span>'+entry.publishedDate+'</span> </p>';
-                        html += '<p>'+entry.contentSnippet+'</p>';
-                        html += '</div>';
-                    }
-                    content.innerHTML = html;
-                }
-            });
-        }
-
-    </script>
+    <script type="text/javascript" src="js/myfeed.js"></script>
 </body>
+</html>
