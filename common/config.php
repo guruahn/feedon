@@ -27,7 +27,7 @@ July/021/2014
 define ("_BASE_PATH_", $_SERVER['DOCUMENT_ROOT']);
 require_once("MysqliDb.php");
 require_once("functions.php");
-$db = new MysqliDb('localhost', 'sa', 'xpsejstldev', 'tendencydev');
+$db = new MysqliDb('localhost', 'witinweb', 'wjddn2tmfrl', 'witinweb');
 
 // XML filename from where details about RSS feed providers are read from.
 define ("RSS_FEED_SOURCES_FILE_NAME", "rss_feed_sources.xml");

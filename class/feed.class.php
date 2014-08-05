@@ -60,7 +60,7 @@
 				$this->db->where($key,$value);
 			}
 		}
-		return	$stats = $this->db->getOne("feeds", $column);
+		return	$stats = $this->db->getOne("feed", $column);
 	}
 
 	/*
@@ -90,7 +90,7 @@
 			"regDate" => date("Y-m-d H:i:s"),
 			"pubDate" => date("Y-m-d H:i:s",strtotime($item->pubDate))
 		);
-		return $this->db->insert('feeds', $data);
+		return $this->db->insert('feed', $data);
 	}
 
 	/*
@@ -107,7 +107,7 @@
 			"providerId" => $provider['id'],
 			"pubDate" => date("Y-m-d H:i:s",strtotime($item->pubDate))
 		);
-		return $this->db->update('feeds', $data);
+		return $this->db->update('feed', $data);
 	}
 
 	/*
