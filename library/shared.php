@@ -68,12 +68,14 @@ function callHook() {
     $controller = ucwords($controller);
     $model = rtrim($controller, 's');
     $controller .= 'Controller';
-    $dispatch = new $controller($model,$controllerName,$action);
+
 
     if ((int)method_exists($controller, $action)) {
+        $dispatch = new $controller($model,$controllerName,$action);
         call_user_func_array(array($dispatch,$action),$queryString);
     } else {
         /* Error Generation Code Here */
+        require_once(ROOT . DS . 'application' . DS . 'views' . DS . '404' . '.php');
     }
 }
 
