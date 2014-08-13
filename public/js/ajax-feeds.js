@@ -2,7 +2,7 @@ function provider_insert(data, callback){
     //console.log(data);
     $.ajax({
         type: "POST",
-        url: "/myfeed/api/providers/insert",
+        url: "/feedon/api/providers/insert",
         data: data,
         dataType: "json"
     }).success(function( data ) {
@@ -21,7 +21,7 @@ function provider_insert(data, callback){
 function update_feed(provider_id){
     $.ajax({
         type: "POST",
-        url: "/myfeed/api/feeds/updateFeeds/"+provider_id,
+        url: "/feedon/api/feeds/updateFeeds/"+provider_id,
         dataType: "json"
     }).success(function( data ) {
         if(data.result){
@@ -39,7 +39,7 @@ function update_feed(provider_id){
 function update_feed_all(){
     $.ajax({
         type: "POST",
-        url: "/myfeed/api/feeds/updateFeedsAll/"
+        url: "/feedon/api/feeds/updateFeedsAll/",
         dataType: "json"
     }).success(function( data ) {
             if(data.result){
@@ -52,4 +52,22 @@ function update_feed_all(){
         }).fail(function(response){
             //console.log(printr_json(response));
         });
+}
+
+function get_list(thispage){
+    $.ajax({
+        type: "POST",
+        url: "/feedon/api/feeds/viewall/"+thispage,
+        dataType: "json"
+    }).success(function(data){
+        if(data.result){
+            $('.feed_list').append(data.feed_list);
+            $('div#loadmoreajaxloader').hide();
+
+        }else{
+            $('div#loadmoreajaxloader').html('<center>No more posts to show.</center>');
+        }
+    }).fail(function(response){
+
+    });
 }

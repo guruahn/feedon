@@ -23,4 +23,6 @@
         ?>
 
     </div>
+    <div id="loadmoreajaxloader">로딩중</div>
 </div>
+

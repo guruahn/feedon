@@ -21,9 +21,31 @@ class FeedsController extends Controller {
 
     }
 
-    function viewall() {
+    function viewall($thispage=1) {
+        global $is_API;
+        $result = array(
+            'result'=>0,
+            'message'=>'failed get feed',
+            'feed_list'=>''
+        );
+
+        if(is_null($thispage)) $thispage = 1;
+        $limit = array( ($thispage-1)*10, 10 );
+
+        $list = $this->Feed->getList( array('pubDate'=>'desc'), $limit );
         $this->set('title','My feed List App');
-        $this->set('feeds', $this->Feed->getList() );
+
+
+        if(count($list) > 0 ){
+            $result['result'] = 1;
+            $result['message'] = 'total '.count($list).' feeds';
+            $result['feed_list'] = $list;
+        }
+        if($is_API){
+            echo json_encode($result);
+        }else{
+            $this->set('feeds', $list );
+        }
     }
 
     function setFeed($item){

@@ -22,9 +22,27 @@ $(document).ready(function() {
         update_feed(provider_id);
         return false;
     });
+
+    //infinite scrolling
+    $(document).endlessScroll({
+        bottomPixels: 0,
+        fireDelay: 1000,
+        callback: function(i) {
+            //alert(i);
+            $('div#loadmoreajaxloader').show();
+            alert(i);
+            setTimeout("get_list("+(i+1)+")",1000*1);
+        }
+    });
 });
 google.load("feeds", "1");
 
+/*
+todo complete function print_feeds()
+ */
+function print_feeds(){
+
+}
 function findFeeds(query) {
     // Query for president feeds on cnn.com
     google.feeds.findFeeds(query, findDone);
