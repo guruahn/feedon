@@ -122,6 +122,43 @@ class FeedsController extends Controller {
     }
 
     /*
+     * update feeds all
+     * @param
+     * @return array
+     *
+     */
+    public function updateFeedsAll(){
+        global $is_API;
+        $update_count = 0;
+        $provider_model = new Provider;
+        $providers = $provider_model->getList();
+
+        $result = array(
+            'result'=>0,
+            'message'=>'failed insert',
+            'id'=>''
+        );
+
+        foreach ( $providers as $provider ) :
+            $received_rss_feeds = $this->readRssFeed( $provider['name'], urldecode($provider['url']) );
+            $update_count = $this->parseRssFeedXml($received_rss_feeds, $provider);
+        endforeach;
+
+        if($update_count > 0 ){
+            $result['result'] = 1;
+            $result['message'] = $update_count.'개 업데이트 완료';
+        }
+
+        if($is_API){
+            echo json_encode($result);
+        }else{
+            $this->set( 'result', $result );
+        }
+        //
+        //return
+    }
+
+    /*
 	* Read rss feed
 	* @param
 	* @return array
