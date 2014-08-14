@@ -1,4 +1,4 @@
-function provider_insert(data, callback){
+function ajax_provider_insert(data, callback){
     //console.log(data);
     $.ajax({
         type: "POST",
@@ -18,7 +18,7 @@ function provider_insert(data, callback){
     });
 }
 
-function update_feed(provider_id){
+function ajax_update_feed(provider_id){
     $.ajax({
         type: "POST",
         url: "/feedon/api/feeds/updateFeeds/"+provider_id,
@@ -54,14 +54,14 @@ function update_feed_all(){
         });
 }
 
-function get_list(thispage){
+function ajax_get_list(thispage){
     $.ajax({
         type: "POST",
         url: "/feedon/api/feeds/viewall/"+thispage,
         dataType: "json"
     }).success(function(data){
         if(data.result){
-            $('.feed_list').append(data.feed_list);
+            print_feeds(data.feed_list);
             $('div#loadmoreajaxloader').hide();
 
         }else{

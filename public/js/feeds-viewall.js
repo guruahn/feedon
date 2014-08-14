@@ -14,12 +14,12 @@ $(document).ready(function() {
             feed_name: $(this).attr('data-name'),
             feed_type: $(this).attr('data-type')
         }
-        provider_insert(data);
+        ajax_provider_insert(data);
         return false;
     });
     $('#navigation').on('click', '.update', function(){
         var provider_id = 7;
-        update_feed(provider_id);
+        ajax_update_feed(provider_id);
         return false;
     });
 
@@ -31,7 +31,7 @@ $(document).ready(function() {
             //alert(i);
             $('div#loadmoreajaxloader').show();
             alert(i);
-            setTimeout("get_list("+(i+1)+")",1000*1);
+            setTimeout("ajax_get_list("+(i+1)+")",1000*1);
         }
     });
 });
@@ -40,9 +40,18 @@ google.load("feeds", "1");
 /*
 todo complete function print_feeds()
  */
-function print_feeds(){
-
+function print_feeds(list){
+    var html = "";
+    list.forEach(function(entry) {
+        html += "<div>";
+        html += "<a href='"+entry['url']+"'>"+entry['title']+"</a>";
+        html += "<span>"+entry['pubDate']+"</span>"
+        html += "<p>"+entry['description']+"</p>";
+        html += "</div>";
+    });
+    $('.feed_list').append(html);
 }
+
 function findFeeds(query) {
     // Query for president feeds on cnn.com
     google.feeds.findFeeds(query, findDone);
