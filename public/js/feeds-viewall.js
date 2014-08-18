@@ -30,7 +30,6 @@ $(document).ready(function() {
         callback: function(i) {
             //alert(i);
             $('div#loadmoreajaxloader').show();
-            alert(i);
             setTimeout("ajax_get_list("+(i+1)+")",1000*1);
         }
     });

@@ -69,7 +69,6 @@ function callHook() {
     $model = rtrim($controller, 's');
     $controller .= 'Controller';
 
-
     if ((int)method_exists($controller, $action)) {
         $dispatch = new $controller($model,$controllerName,$action);
         call_user_func_array(array($dispatch,$action),$queryString);
