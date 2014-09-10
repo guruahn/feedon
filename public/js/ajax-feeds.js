@@ -36,7 +36,7 @@ function ajax_update_feed(provider_id){
     });
 }
 
-function update_feed_all(){
+function ajax_update_feed_all(){
     $.ajax({
         type: "POST",
         url: "/feedon/api/feeds/updateFeedsAll/",

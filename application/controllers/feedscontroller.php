@@ -160,7 +160,6 @@ class FeedsController extends Controller {
             'message'=>'failed insert',
             'id'=>''
         );
-
         foreach ( $providers as $provider ) :
             $received_rss_feeds = $this->readRssFeed( $provider['name'], urldecode($provider['url']) );
             $update_count = $this->parseRssFeedXml($received_rss_feeds, $provider);

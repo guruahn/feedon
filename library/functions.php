@@ -11,6 +11,43 @@ function is_image($mime) {
     }
 }
 
+
+/**
+ * redirect
+ */
+function redirect($url, $statusCode = 303)
+{
+    header('Location: ' . $url, true, $statusCode);
+    die();
+}
+
+/**
+ * popup message and redirect
+ */
+function msg_page($msg, $url=""){
+    if($url==""){
+        $url="history.go(-1)";
+    }else if($url=="close"){
+        $url="window.close()";
+    }else{
+        $url="document.location.href='$url'";
+    }
+
+    echo "<script type='text/javascript'>alert('$msg');$url;</script>";
+    exit;
+}
+
+/**
+ * login check
+ */
+function is_login(){
+    if( !isset($_SESSION['LOGIN_NO']) || !isset($_SESSION['LOGIN_ID']) ) {
+        return false;
+    }else{
+        return true;
+    }
+}
+
 /**
 * 텍스트 일정한 길이로 자르기
 */

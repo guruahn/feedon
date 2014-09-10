@@ -7,10 +7,17 @@ class Feed extends Model {
      * @param
      * @return array
      */
-    public function getList($orderby = null, $limit) {
+    public function getList($orderby = null, $limit, $where = null) {
         if( !is_null($orderby) && is_array($orderby) ){
             foreach($orderby as $key => $value){
                 $this->orderBy($key,$value);
+            }
+        }
+        if( !is_null($where) && is_array($where)  )
+        {
+            foreach($where as $key => $value)
+            {
+                $this->where($key,$value);
             }
         }
         $feeds = $this->get('feed', $limit);

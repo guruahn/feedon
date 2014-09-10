@@ -17,6 +17,48 @@ class ProvidersController extends Controller {
     }
 
     /*
+     * view
+     * @param
+     * @return array
+     */
+    function view($id = null,$column = '*', $name = null) {
+        $this->set('title',$name.'Provider List - My Feed App');
+        $this->set('provider', $this->Provider->getProvider( $column, array("id"=>$id)) );
+
+    }
+
+    /*
+     * list of provider
+     * @param
+     * @return array
+     */
+    function feeds($provider_id, $thispage = null) {
+        global $is_API;
+        $result = array(
+            'result'=>0,
+            'message'=>'failed get feed',
+            'feed_list'=>''
+        );
+
+        if(is_null($thispage)) $thispage = 1;
+        $limit = array( ($thispage-1)*10, 10 );
+        $feed = new Feed();
+        $list = $feed->getList( array('pubDate'=>'desc'), $limit, array("providerId"=>$provider_id) );
+        $this->set('title','My feed List App');
+
+        if(count($list) > 0 ){
+            $result['result'] = 1;
+            $result['message'] = 'total '.count($list).' feeds';
+            $result['feed_list'] = $list;
+        }
+        if($is_API){
+            echo json_encode($result);
+        }else{
+            $this->set('feeds', $list );
+        }
+    }
+
+    /*
      * insert
      * @param
      * @return array

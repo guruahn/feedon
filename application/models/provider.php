@@ -21,8 +21,7 @@ class Provider extends Model {
 	* @param (string)$column, (array)$where
 	* @return array
 	*/
-    public function getProvider($column, $where = null)
-    {
+    public function getProvider($column, $where = null){
         if( !is_null($where) && is_array($where) )
         {
             foreach($where as $key => $value)

@@ -18,8 +18,7 @@ $(document).ready(function() {
         return false;
     });
     $('#navigation').on('click', '.update', function(){
-        var provider_id = 7;
-        ajax_update_feed(provider_id);
+        ajax_update_feed_all();
         return false;
     });
 

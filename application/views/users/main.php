@@ -8,7 +8,7 @@
 
 ?>
 
-<div class="wrapper">
+<div id="wrapper">
     <h2><?php echo $title; ?></h2>
     <p><button class="login-facebook">log in with facebook</button></p>
 </div>

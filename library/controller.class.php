@@ -24,6 +24,7 @@ class Controller {
     function __destruct() {
         global $is_API;
         if(!$is_API) $this->_template->render();
+        if(!is_login() && !strpos($this->_action, "inForm") ) redirect(_BASE_URL_."/users/loginForm");
     }
 
 }
